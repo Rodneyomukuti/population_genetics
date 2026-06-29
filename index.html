@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Population Genetics for Conservation — Kenya Wildlife Genomics</title>
+<meta name="description" content="An interactive tutorial on conservation genomics — from Linux basics to selection scans, with Kenyan wildlife case studies.">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="progress-wrap"><div id="progress-bar"></div></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="#">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
+    PopGen Kenya
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Genomics?</a></li>
+    <li><a href="#sequencing">Sequencing</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#structure">Population Structure</a></li>
+    <li><a href="#diversity">Diversity</a></li>
+    <li><a href="#demography">Demography</a></li>
+    <li><a href="#selection">Selection</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+    Wildlife Genomics 3 Workshop · Pwani University, Kilifi
+  </div>
+  <h1>Population Genetics<br>for Conservation</h1>
+  <p>An interactive guide to conservation genomics — from raw sequencing data to management decisions, grounded in Kenyan wildlife and the theory of Philip Hedrick's <em>Genetics of Populations</em> (4th ed.).</p>
+  <div class="hero-ctas">
+    <a href="#why" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
+      Start Learning
+    </a>
+    <a href="https://github.com/Rodneyomukuti/population_genetics" class="btn btn-secondary" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-number">9</div><div class="stat-label">Learning Modules</div></div>
+  <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">Discussion Questions</div></div>
+  <div class="stat-item"><div class="stat-number">8+</div><div class="stat-label">Kenya Case Studies</div></div>
+  <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Sequencing Platforms</div></div>
+  <div class="stat-item"><div class="stat-number">25+</div><div class="stat-label">Analysis Tools</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- WHY GENOMICS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="why" class="section">
+<div class="container">
+  <div class="section-label">Foundations</div>
+  <h2>Why Sequence Wildlife DNA?</h2>
+  <p style="font-size:1.05rem;max-width:800px;">You can watch a herd of elephants for 20 years and never know they are severely inbred, carrying fatal recessive alleles, or genetically isolated from the next herd 50 km away. Genomics makes the invisible visible.</p>
+
+  <div class="callout info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-content">
+      <p><strong>"Nothing in evolution makes sense except in light of population genetics."</strong><br>
+      — Michael Lynch (2007), as quoted in Hedrick, <em>Genetics of Populations</em>, Chapter 1</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem;">The Grevy's Zebra Thought Experiment</h3>
+  <p>You are managing 80 Grevy's zebra in Lewa Wildlife Conservancy, northern Kenya. The herd looks healthy. Foals are being born. But suppose:</p>
+
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+    <div class="card">
+      <div class="card-icon green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h4>Invisible Inbreeding</h4>
+      <p style="font-size:0.88rem;">40 of 80 animals are siblings or half-siblings. No field observation reveals this. ROH analysis detects it immediately.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h4>Hidden Lethal Alleles</h4>
+      <p style="font-size:0.88rem;">A recessive cardiac defect allele at 8% frequency — silent until two carriers mate. Variant calling reveals carrier status.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg></div>
+      <h4>Unknown Shared Units</h4>
+      <p style="font-size:0.88rem;">15 animals share genetics with Samburu-area herds — meaning three parks share one management unit, not three.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon orange"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h4>Misleading Census Size</h4>
+      <p style="font-size:0.88rem;">N_e = 12, not 80, because one stallion sires nearly all foals. Genomics calculates the true genetic population size.</p>
+    </div>
+  </div>
+
+  <div class="figure-block" style="margin-top:2.5rem;">
+    <img src="assets/images/02_kenya_parks_map.png" alt="Map of Kenya wildlife parks with conservation genomics case studies">
+    <div class="figure-caption"><strong>Figure 1.</strong> Kenya's major wildlife conservancies and national parks, each representing a living case study for conservation genomics. From Maasai Mara lions (Fst=0.08 vs. the Serengeti) to the critically endangered northern white rhino at Ol Pejeta, every population carries a unique genetic story that only sequencing can reveal.</div>
+  </div>
+
+  <h3>What Genomics Answers That Fieldwork Cannot</h3>
+  <table>
+    <tr><th>Management Question</th><th>Genomic Tool</th><th>Output</th></tr>
+    <tr><td>Is this population genetically healthy?</td><td>H_e, π, Fst</td><td>Diversity metrics, threshold alerts</td></tr>
+    <tr><td>Are individuals too related to breed?</td><td>Kinship coefficients, ROH</td><td>Optimal breeding pairs</td></tr>
+    <tr><td>Should we translocate animals?</td><td>Fst, Admixture</td><td>Compatible donor populations</td></tr>
+    <tr><td>Where did confiscated ivory come from?</td><td>Population assignment</td><td>Geographic origin to 50 km</td></tr>
+    <tr><td>Is this population adapting or declining genetically?</td><td>Tajima's D, selection scans</td><td>Adaptive loci, deleterious burden</td></tr>
+    <tr><td>Did this bottleneck happen recently?</td><td>PSMC, GONE</td><td>N_e through time — centuries to millennia</td></tr>
+    <tr><td>Are these two herds one management unit?</td><td>Gene flow estimation</td><td>Number of migrants per generation</td></tr>
+  </table>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 1</div>
+    <div class="dq-question">Think of a species or population you manage or care about. Write down three management decisions you make regularly. For each one: could genomic data improve that decision? How would you collect the samples? What would you do with the results?</div>
+    <span class="dq-toggle">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg>
+      Show brainstorm / key ideas
+    </span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>Translocation decisions:</strong> Instead of guessing which donor population is "compatible," use Fst and Admixture to identify populations that are distinct enough to add diversity, but not so different they risk outbreeding depression. Target Fst 0.05–0.15.</li>
+        <li><strong>Breeding pairing in captive populations:</strong> Kinship coefficients from RAD-Seq or lcWGS identify the least-related pairs for breeding — more accurate than pedigrees which are often incomplete for wild-born animals.</li>
+        <li><strong>Anti-poaching evidence:</strong> Population assignment tests can link confiscated products to a specific conservancy, strengthening prosecution. A SNP panel of 500 loci from known populations can assign an individual to its source with >95% confidence.</li>
+        <li><strong>Disease surveillance:</strong> MHC diversity (a genomic measure) predicts which populations are most vulnerable to specific pathogen outbreaks. Populations with low MHC variation should be prioritised for disease monitoring.</li>
+        <li><strong>Sample collection:</strong> Fecal DNA for non-invasive sampling; blood from routine health checks; ear punches during live-capture operations.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SEQUENCING STRATEGIES -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="sequencing" class="section">
+<div class="container">
+  <div class="section-label">Module 1</div>
+  <h2>Choosing How to Sequence</h2>
+  <p>From 20 allozyme loci to 3 billion bases of whole-genome sequence — the choice of molecular marker determines what questions you can answer, and at what cost. There is no universal "best" approach.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/01_marker_evolution.png" alt="Evolution of molecular markers from allozymes to WGS">
+    <div class="figure-caption"><strong>Figure 2.</strong> The molecular marker revolution. Genome coverage (green) and relative cost (orange) of each approach, normalised to WGS. Allozymes sampled &lt;0.01% of the genome; whole-genome sequencing samples 100%. Costs have dropped 1,000,000× since the first human genome ($3 billion in 2003 to under $200 today).</div>
+  </div>
+
+  <h3>Sequencing Platform Comparison: Illumina vs. Oxford Nanopore</h3>
+  <table>
+    <tr><th>Feature</th><th>Illumina (Short-read)</th><th>Oxford Nanopore (Long-read)</th></tr>
+    <tr><td>Read length</td><td>150–300 bp</td><td>10,000–1,000,000+ bp</td></tr>
+    <tr><td>Accuracy per base</td><td>99.9% (very high)</td><td>95–99% (improving)</td></tr>
+    <tr><td>Cost per Gb</td><td>~$5–15 USD</td><td>~$15–40 USD</td></tr>
+    <tr><td>Portability</td><td>Lab only</td><td>MinION is USB-sized — field deployable</td></tr>
+    <tr><td>Best for</td><td>SNP calling, population genomics</td><td>Assembly, structural variation, field forensics</td></tr>
+    <tr><td>Reference required?</td><td>Ideally yes</td><td>Less critical</td></tr>
+  </table>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-content">
+      <p><strong>Oxford Nanopore in Kenya:</strong> The MinION sequencer has been deployed at KWS laboratories and several universities. Its key advantage for conservation forensics — you can sequence a confiscated sample, identify the species, and estimate population assignment <em>on-site</em> within 6 hours, without shipping samples abroad.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem;">The Four Strategies — Choosing for Your Question</h3>
+
+  <div class="module-nav">
+    <a class="module-tab active" data-module="wgs" href="#">WGS</a>
+    <a class="module-tab" data-module="lcwgs" href="#">lcWGS</a>
+    <a class="module-tab" data-module="radseq" href="#">RAD-Seq</a>
+    <a class="module-tab" data-module="amplicon" href="#">Amplicon</a>
+  </div>
+
+  <div id="module-wgs" class="module-content active">
+    <h3>Whole Genome Sequencing (WGS) at High Coverage</h3>
+    <p>Every nucleotide of every individual's genome, sequenced to 15–30× coverage. The gold standard — and the most expensive.</p>
+    <table>
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Coverage depth</td><td>15–30× (each base read 15–30 times)</td></tr>
+      <tr><td>Cost per individual</td><td>$300–800 USD (2024 prices, 20× coverage)</td></tr>
+      <tr><td>DNA requirement</td><td>≥500 ng, high molecular weight (&gt;20 kb)</td></tr>
+      <tr><td>Best sample types</td><td>Fresh blood (EDTA), muscle tissue, ethanol-preserved tissue</td></tr>
+      <tr><td>Enables</td><td>All analyses: ROH, PSMC, selection scans, individual identity, de novo assembly</td></tr>
+      <tr><td>Does NOT enable</td><td>Nothing is excluded at high coverage</td></tr>
+    </table>
+    <div class="callout success">
+      <div class="callout-icon">✅</div>
+      <div class="callout-content"><p><strong>Use WGS when:</strong> studying flagship species (lion, elephant, rhino), building the first reference genome for a species, or when all downstream analyses are needed. One high-coverage genome per population is sufficient for PSMC demographic history.</p></div>
+    </div>
+    <div class="case-study">
+      <h4>Cheetah WGS — Decoding 10,000 Years of Collapse</h4>
+      <p>High-coverage WGS of cheetahs (<em>Acinonyx jubatus</em>) from East Africa revealed nucleotide diversity π ≈ 0.00003 — roughly 100× lower than lions. PSMC analysis traced this to a severe bottleneck 10,000–12,000 years ago (post-ice-age). A second bottleneck occurred 1,000–2,000 years ago — coinciding with human range contraction. Critically, this genetic collapse preceded significant human impact, meaning some cheetah low-diversity is irreversible. Management implication: maximise connectivity between remaining subpopulations to prevent further drift, rather than expecting genetic rescue to fully restore diversity.</p>
+    </div>
+  </div>
+
+  <div id="module-lcwgs" class="module-content">
+    <h3>Low-Coverage Whole Genome Sequencing (lcWGS)</h3>
+    <p>Sequence the entire genome at 1–5× depth. You cannot call individual genotypes reliably, but statistical methods extract population-level information with high accuracy. The sweet spot for large-scale conservation surveys.</p>
+    <table>
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Coverage depth</td><td>0.5–5× (typically 1–2× for population structure)</td></tr>
+      <tr><td>Cost per individual</td><td>$40–150 USD — 5–10× cheaper than WGS</td></tr>
+      <tr><td>Key tool</td><td>ANGSD — works with genotype likelihoods, not hard calls</td></tr>
+      <tr><td>Best for</td><td>100–1000s of individuals: PCA, Admixture, Fst, diversity</td></tr>
+      <tr><td>Cannot do</td><td>ROH (needs ≥8×), PSMC (needs ≥15×), individual ID</td></tr>
+    </table>
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-content"><p><strong>Critical caveat:</strong> Never use standard GATK or bcftools hard-genotype calling on lcWGS data. At 1×, a heterozygous individual will appear homozygous 50% of the time (one read per position). Use ANGSD's genotype likelihood framework (<code>-GL 1 -doGlf 2</code>) instead.</p></div>
+    </div>
+    <div class="case-study">
+      <h4>African Wild Dogs — lcWGS Reveals Hidden Corridors</h4>
+      <p>A 2021 study sequenced 118 African wild dogs (<em>Lycaon pictus</em>) at ~2× coverage across 7 East African populations. Cost: ~$18,000 USD. This revealed fine-scale population structure invisible to microsatellites and identified a previously unknown genetic connectivity corridor between Selous and Ruaha ecosystems — a finding that immediately informed Tanzania's wildlife corridor policy. The same study would have cost &gt;$200,000 USD with WGS.</p>
+    </div>
+  </div>
+
+  <div id="module-radseq" class="module-content">
+    <h3>RAD-Seq (Restriction-site Associated DNA Sequencing)</h3>
+    <p>Restriction enzymes cut the genome at specific sequences. Only DNA near those cut sites is sequenced — giving thousands of SNPs from ~1–5% of the genome at very low cost.</p>
+    <table>
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>SNPs generated</td><td>1,000–100,000 per individual</td></tr>
+      <tr><td>Cost per individual</td><td>$30–80 USD (reagents + sequencing)</td></tr>
+      <tr><td>DNA requirement</td><td>500 ng–1 µg, moderate quality (&gt;5 kb preferred)</td></tr>
+      <tr><td>Missing data</td><td>Can reach 30–50% — major challenge</td></tr>
+      <tr><td>Best for</td><td>Large N (100–1000s), landscape genetics, no reference genome</td></tr>
+    </table>
+    <div class="callout danger">
+      <div class="callout-icon">🚨</div>
+      <div class="callout-content">
+        <p><strong>Three critical RAD-Seq caveats for conservation:</strong></p>
+        <p><strong>1. Ascertainment bias:</strong> Your SNPs are not a random sample of the genome — they cluster near restriction sites. Diversity and divergence estimates are biased.</p>
+        <p><strong>2. Locus dropout:</strong> If a restriction site mutates in a population, that population has no data at that locus. Dropout rates &gt;30% seriously distort PCA and Admixture.</p>
+        <p><strong>3. No demographic history:</strong> You cannot run PSMC or estimate ROH — you don't have the contiguous genome. If these analyses matter, lcWGS is a better investment.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="module-amplicon" class="module-content">
+    <h3>Amplicon Sequencing (Targeted Sequencing)</h3>
+    <p>PCR primers amplify only specific regions of interest — used when you know exactly which loci matter, or when DNA quality is too poor for any other approach.</p>
+    <table>
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Loci per run</td><td>1–several thousand (multiplexed)</td></tr>
+      <tr><td>Cost per individual</td><td>Cheap per locus; expensive for many loci</td></tr>
+      <tr><td>DNA requirement</td><td>1–10 ng — works from museum specimens, feces, old samples</td></tr>
+      <tr><td>Best for</td><td>Forensic ID panels, specific adaptive loci, ancient DNA</td></tr>
+      <tr><td>Cannot do</td><td>Discover new variants; genome-wide analysis</td></tr>
+    </table>
+    <div class="case-study">
+      <h4>Ivory Forensics at KWS — 500-SNP Identification Panel</h4>
+      <p>Kenya Wildlife Service uses an amplicon-based panel of ~500 diagnostic SNPs to assign confiscated ivory to geographic origin within East Africa. DNA is extracted from a small ivory chip (≥5 mg), amplified with a multiplexed PCR panel, and sequenced on an Illumina MiSeq. Population assignment to 50 km resolution is achievable in 72 hours. This same panel could be adapted for rhino horn, pangolin scales, and bushmeat identification.</p>
+    </div>
+  </div>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 2</div>
+    <div class="dq-question">You have a budget of $20,000 USD to study population structure of roan antelope (<em>Hippotragus equinus</em>) across five Kenyan conservancies. You estimate 15–25 animals are accessible per site for blood sampling. Which sequencing approach do you choose, and why? What would you sacrifice with your choice?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>Best choice: lcWGS at 1–2×.</strong> With 75–125 individuals and $20,000, you can allocate ~$150–250 per individual including library prep and sequencing — feasible at 1–2× coverage. This gives genome-wide PCA, Admixture, pairwise Fst, and diversity metrics.</li>
+        <li><strong>RAD-Seq alternative:</strong> At $60/individual you could sequence all 125 animals plus have money for bioinformatics. But ascertainment bias and dropout make diversity comparisons unreliable. For a poorly-studied species, RAD-Seq locus dropout could be severe.</li>
+        <li><strong>What you sacrifice with lcWGS:</strong> You cannot call individual genotypes, so no parentage testing, no individual forensic ID, and no ROH-based inbreeding coefficients. For the latter, you'd need ≥8× for some animals.</li>
+        <li><strong>Practical recommendation:</strong> Do lcWGS at 2× for 80 individuals across all five sites (16 per site). Use remaining budget for library preparation and bioinformatics. The 2× depth allows genotype-likelihood-based analysis in ANGSD.</li>
+        <li><strong>Key question to ask first:</strong> Does a roan antelope reference genome exist? If not, budget $5,000–8,000 for a draft assembly using one high-coverage (30×) individual before lcWGS for the rest.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PIPELINE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="pipeline" class="section">
+<div class="container">
+  <div class="section-label">Modules 2–5</div>
+  <h2>The Analysis Pipeline</h2>
+  <p>Every genomics project follows the same core pathway — from raw sequencing reads to filtered variants ready for population genetic analysis.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/09_pipeline_workflow.png" alt="Wildlife genomics analysis pipeline flowchart">
+    <div class="figure-caption"><strong>Figure 3.</strong> The complete wildlife genomics pipeline. Each step is a software transformation: FASTQ → trimmed FASTQ → BAM → VCF → filtered VCF → population genetic outputs. Every arrow is a tool call; every box is a file format.</div>
+  </div>
+
+  <h3>Module 2 — Linux Basics &amp; the FASTQ File</h3>
+  <p>All genomics tools run in Linux. This is not arbitrary — Linux handles files too large for any graphical application and runs tools in parallel across many CPU cores. The FASTQ file is your starting point.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/03_fastq_explainer.png" alt="FASTQ file format explained with quality scores">
+    <div class="figure-caption"><strong>Figure 4.</strong> Anatomy of a FASTQ read. Every DNA read from the sequencer is stored as four lines. The quality score line (Line 4) is the key to data quality — each ASCII character encodes a Phred score telling you how confident the sequencer was about that base call. Q30 means 99.9% accuracy.</div>
+  </div>
+
+  <h4>Essential Commands</h4>
+  <pre><span class="comment"># Find out how many reads you have</span>
+<span class="cmd">wc</span> <span class="flag">-l</span> <span class="str">sample.fastq</span>        <span class="comment"># Divide by 4 = number of reads</span>
+<span class="cmd">zcat</span> <span class="str">sample.fastq.gz</span> | <span class="cmd">head</span> <span class="flag">-n</span> 8  <span class="comment"># Peek at first 2 reads (compressed)</span>
+
+<span class="comment"># Calculate coverage depth</span>
+<span class="comment"># coverage = (reads × 150 bp) / genome_size</span>
+<span class="comment"># Example: 20M reads × 150 / 2.5Gb = 1.2×</span>
+
+<span class="comment"># Navigate and organise</span>
+<span class="cmd">ls</span> <span class="flag">-lh</span>                   <span class="comment"># List files with human-readable sizes</span>
+<span class="cmd">mkdir</span> <span class="flag">-p</span> results/qc results/mapping results/variants</pre>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 3</div>
+    <div class="dq-question">You receive a FASTQ file from a sequencing centre. File size is 8 GB for paired-end reads (R1 + R2). The elephant genome is ~3.1 Gb and your reads are 150 bp. Estimate the number of reads and approximate coverage. Is this enough for lcWGS? For WGS at 20×?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>Estimating reads:</strong> A compressed FASTQ.gz file is typically 3–4× compressed. 8 GB compressed ≈ 25–32 GB uncompressed. At ~250 bytes per read (4 lines × ~63 bytes each), this is approximately 100–130 million reads.</li>
+        <li><strong>Coverage estimate:</strong> 120M reads × 150 bp / 3,100,000,000 bp = 5.8× — between lcWGS and WGS.</li>
+        <li><strong>For lcWGS (1–2×):</strong> More than sufficient — you could subsample to 1× and keep the rest for quality validation.</li>
+        <li><strong>For WGS at 20×:</strong> Not enough — you need approximately 400M reads for 20× of a 3.1 Gb genome. You would need to sequence ~3.4× more.</li>
+        <li><strong>Practical interpretation:</strong> This data is ideal for lcWGS-based population structure analysis using ANGSD. It is insufficient for PSMC demographic history or reliable individual-level ROH, which need ≥15× per individual.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.5rem;">Module 3 — Quality Control</h3>
+  <p>Before any analysis, run FastQC to detect problems: adapter contamination (synthetic library preparation sequences that must be removed), low-quality bases at read ends, and PCR duplicate inflation. Then trim with Trim Galore.</p>
+
+  <pre><span class="comment"># Run FastQC</span>
+<span class="cmd">fastqc</span> <span class="flag">--threads</span> 4 <span class="flag">-o</span> results/qc/ sample_R1.fastq.gz sample_R2.fastq.gz
+
+<span class="comment"># Trim adapters and low-quality bases</span>
+<span class="cmd">trim_galore</span> \
+    <span class="flag">--paired</span> \
+    <span class="flag">--quality</span> 20 \       <span class="comment"># Remove bases below Q20</span>
+    <span class="flag">--length</span> 50 \        <span class="comment"># Discard reads shorter than 50 bp after trimming</span>
+    <span class="flag">--cores</span> 4 \
+    sample_R1.fastq.gz sample_R2.fastq.gz \
+    <span class="flag">--output_dir</span> trimmed/
+
+<span class="comment"># Re-run FastQC to confirm improvement</span>
+<span class="cmd">fastqc</span> <span class="flag">-o</span> results/qc_post/ trimmed/*_trimmed.fq.gz</pre>
+
+  <h3 style="margin-top:2.5rem;">Module 4 — Read Mapping</h3>
+  <p>Align cleaned reads to the reference genome. Each read gets a position (chromosome:base), a strand, a CIGAR string (encoding matches/mismatches/indels), and a MAPQ score (alignment confidence, 0–60).</p>
+
+  <pre><span class="comment"># Index the reference (one-time)</span>
+<span class="cmd">bwa</span> index <span class="flag">-a</span> bwtsw reference_genome.fasta
+
+<span class="comment"># Map reads — the -R flag (read group) is REQUIRED for variant calling</span>
+<span class="cmd">bwa</span> mem \
+    <span class="flag">-t</span> 8 \
+    <span class="flag">-R</span> <span class="str">"@RG\tID:Lion_Mara_01\tSM:Lion_Mara_01\tPL:ILLUMINA"</span> \
+    reference_genome.fasta \
+    trimmed/Lion_Mara_01_R1.fq.gz trimmed/Lion_Mara_01_R2.fq.gz \
+    | <span class="cmd">samtools</span> sort <span class="flag">-o</span> aligned/Lion_Mara_01_sorted.bam
+<span class="cmd">samtools</span> index aligned/Lion_Mara_01_sorted.bam
+
+<span class="comment"># Check mapping statistics</span>
+<span class="cmd">samtools</span> flagstat aligned/Lion_Mara_01_sorted.bam</pre>
+
+  <div class="callout info">
+    <div class="callout-icon">🔍</div>
+    <div class="callout-content">
+      <p><strong>What to look for in flagstat output:</strong><br>
+      Mapping rate &gt;90% = excellent | &gt;80% = acceptable | &lt;70% = suspect (reference mismatch or degraded DNA)<br>
+      Duplicate rate 10–30% = normal | &gt;60% = may inflate variant confidence (check library prep)</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.5rem;">Module 5 — Variant Calling &amp; SNP Filtering</h3>
+  <p>Compare mapped reads to the reference at every genomic position. Positions where individuals differ are variants (SNPs, indels). The raw VCF contains real variants, sequencing errors, and mapping artefacts — filtering separates them.</p>
+
+  <pre><span class="comment"># Multi-sample variant calling (recommended — more statistical power)</span>
+<span class="cmd">bcftools</span> mpileup \
+    <span class="flag">-f</span> reference_genome.fasta \
+    <span class="flag">--min-MQ</span> 20 <span class="flag">--min-BQ</span> 20 \
+    aligned/sample*.bam | \
+<span class="cmd">bcftools</span> call \
+    <span class="flag">--multiallelic-caller</span> \
+    <span class="flag">--variants-only</span> \
+    <span class="flag">-O</span> z <span class="flag">-o</span> variants/raw.vcf.gz
+
+<span class="comment"># Apply filters</span>
+<span class="cmd">vcftools</span> \
+    <span class="flag">--gzvcf</span> variants/raw.vcf.gz \
+    <span class="flag">--minDP</span> 8 <span class="flag">--maxDP</span> 60 \       <span class="comment"># Depth: 8–60× (3× mean)</span>
+    <span class="flag">--minQ</span> 30 \                    <span class="comment"># Variant quality ≥ Q30</span>
+    <span class="flag">--maf</span> 0.05 \                   <span class="comment"># Minor allele frequency ≥ 5%</span>
+    <span class="flag">--max-missing</span> 0.90 \           <span class="comment"># Present in ≥90% of individuals</span>
+    <span class="flag">--remove-indels</span> \
+    <span class="flag">--recode</span> <span class="flag">--out</span> variants/filtered</pre>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 4</div>
+    <div class="dq-question">After filtering, you have 450,000 SNPs from 45 Amboseli elephants. Your colleague suggests removing all SNPs with MAF &lt; 0.10 to "improve data quality." Another colleague says this will bias your diversity estimates. Who is right, and for which analysis does each argument apply?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>First colleague is right for PCA and Admixture:</strong> Very rare variants (MAF &lt;0.05) are often sequencing errors. Even if real, they contribute almost no information about population structure — but can disproportionately affect PCA if they are correlated with technical artefacts (e.g., one individual consistently has poor coverage).</li>
+        <li><strong>Second colleague is right for diversity analysis:</strong> Nucleotide diversity (π) and allelic richness depend critically on rare alleles. A MAF filter of 0.10 would remove most of the signal from recent mutations — exactly the variants that reflect recent bottlenecks and demographic changes. Tajima's D would also be severely distorted.</li>
+        <li><strong>The compromise:</strong> Apply MAF ≥ 0.05 for PCA/Admixture/Fst datasets. Use MAF ≥ 0.01 (or no MAF filter) for diversity statistics and selection scans. These are two different output files from the same raw VCF.</li>
+        <li><strong>For genetic load analysis:</strong> Do NOT apply any MAF filter — deleterious alleles are maintained at low frequency by mutation-selection balance. Filtering them out removes exactly the variants you want to study.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- POPULATION STRUCTURE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="structure" class="section">
+<div class="container">
+  <div class="section-label">Module 6</div>
+  <h2>Hardy-Weinberg &amp; Population Structure</h2>
+
+  <h3>Hardy-Weinberg Equilibrium — The Null Model</h3>
+  <p>Hedrick (Chapter 2) calls HWE "of basic importance to population genetics" because it converts the complexity of genotype frequencies into a single parameter: allele frequency <em>p</em>.</p>
+  <p>In a large, randomly mating population with no selection, mutation, migration, or drift, after one generation of random mating:</p>
+
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin:1.5rem 0;text-align:center;font-size:1.1rem;">
+    <strong style="color:var(--green);">P(A₁A₁) = p²</strong> &nbsp;|&nbsp;
+    <strong style="color:var(--blue);">P(A₁A₂) = 2pq</strong> &nbsp;|&nbsp;
+    <strong style="color:var(--orange);">P(A₂A₂) = q²</strong>
+    <br><span style="color:var(--muted);font-size:0.85rem;margin-top:0.5rem;display:block;">where p + q = 1 (allele frequencies sum to 1)</span>
+  </div>
+
+  <div class="figure-block">
+    <img src="assets/images/04_hardy_weinberg.png" alt="Hardy-Weinberg equilibrium visualisation with Wahlund effect example">
+    <div class="figure-caption"><strong>Figure 5.</strong> Left: HWE genotype frequencies as a function of allele frequency p. Heterozygosity is maximised at p=0.5. Right: HWE test for a hypothetical Amboseli elephant locus (p=0.60). Green bars show HWE-conforming data. The orange bars show the Wahlund effect — when you mix elephants from two distinct herds, you see apparent excess heterozygosity that disappears once you analyse each herd separately.</div>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-content">
+      <p><strong>The Wahlund Effect in Practice:</strong> If you collect blood from Amboseli elephants and include animals from two distinct sub-herds (northern and southern range), your HWE test will show excess heterozygotes — not because of heterozygote advantage, but because you've mixed two distinct allele frequency pools. <em>Always structure your HWE tests by known groups or use it as a tool to <em>discover</em> hidden structure.</em></p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.5rem;">PCA — Visualising Genetic Relationships</h3>
+  <p>PCA collapses thousands of SNPs into 2–3 axes that capture the most genetic variation. Individuals close together on a PCA plot are genetically similar; clusters indicate populations.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/05_population_structure.png" alt="PCA and Admixture analysis of Kenyan lion populations">
+    <div class="figure-caption"><strong>Figure 6.</strong> Simulated population structure analysis of Kenyan lions. Left: PCA with PC1 separating Maasai Mara from Tsavo populations (likely isolation by the Rift Valley and human settlements). PC2 separates Samburu (northern arid) from Amboseli (southern savanna). Right: Admixture at K=4 showing mostly "pure" ancestry per population but with low-level admixture signals consistent with historical gene flow between adjacent parks.</div>
+  </div>
+
+  <pre><span class="comment"># Convert VCF to PLINK format</span>
+<span class="cmd">plink</span> <span class="flag">--vcf</span> filtered/variants_filtered.recode.vcf <span class="flag">--make-bed</span> <span class="flag">-out</span> plink/lions <span class="flag">--allow-extra-chr</span>
+
+<span class="comment"># LD pruning before PCA (removes correlated SNPs)</span>
+<span class="cmd">plink</span> <span class="flag">--bfile</span> plink/lions <span class="flag">--indep-pairwise</span> 50 10 0.1 <span class="flag">--out</span> plink/pruned <span class="flag">--allow-extra-chr</span>
+
+<span class="comment"># Run PCA</span>
+<span class="cmd">plink</span> <span class="flag">--bfile</span> plink/lions <span class="flag">--extract</span> plink/pruned.prune.in <span class="flag">--pca</span> 20 <span class="flag">--out</span> results/pca <span class="flag">--allow-extra-chr</span>
+
+<span class="comment"># Run Admixture for K=2 to K=8</span>
+<span class="cmd">for</span> K in 2 3 4 5 6 7 8; <span class="cmd">do</span>
+    <span class="cmd">admixture</span> <span class="flag">--cv</span> plink/lions.bed $K | <span class="cmd">tee</span> logs/admixture_K${K}.log
+<span class="cmd">done</span>
+<span class="comment"># Find best K: grep "CV error" logs/admixture_K*.log</span></pre>
+
+  <div class="case-study">
+    <h4>Maasai Mara Lions — Fst=0.08 from the Serengeti</h4>
+    <p>A PCA and Admixture study of lions across the Mara-Serengeti ecosystem found Fst=0.08 between Maasai Mara (Kenya) and the Serengeti (Tanzania), despite the two populations being separated by only ~50 km and connected by a famous wildlife corridor. The barrier? The Kenya-Tanzania border road and associated human settlement has suppressed gene flow enough to create moderate genetic differentiation within 2–3 generations. Management implication: maintaining the Mara-Serengeti corridor is genetically critical — without it, Mara lions will become as isolated as the Tsavo population (Fst=0.14 from Mara) within decades.</p>
+  </div>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 5</div>
+    <div class="dq-question">An Admixture analysis of 60 Rothschild giraffe from three conservancies (20 each) at K=2 shows: all Laikipia animals are 100% cluster 1, all Nakuru animals are 100% cluster 2, but Ol Pejeta animals are 40–60% each cluster. Give three different biological explanations for the Ol Pejeta pattern. What additional data would help distinguish between them?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>Explanation 1 — Ongoing gene flow:</strong> Ol Pejeta is geographically between the two conservancies and maintains active movement corridors to both. Some individuals regularly move between sites. To test: check if mixed-ancestry individuals are adults (long-term residents of Ol Pejeta, unlikely) or young (recent migrants, more likely).</li>
+        <li><strong>Explanation 2 — Historical admixture (hybrid zone):</strong> Ol Pejeta was historically a contact zone between two lineages whose ranges overlapped. All current Ol Pejeta animals descend from a mixed-ancestry founder population. To test: are all Ol Pejeta animals ~50% each, or do they vary from 20–80%? If all are near 50%, they may all be F1-like historical hybrids.</li>
+        <li><strong>Explanation 3 — Recent translocations:</strong> Animals from both Laikipia and Nakuru have been translocated to Ol Pejeta in the past 20 years. The admixed signal reflects these human movements. To test: check KWS translocation records. Genomics can determine the direction and timing (F_ROH in translocated individuals will be different).</li>
+        <li><strong>Additional data needed:</strong> (1) Long-term movement data (GPS collars); (2) KWS translocation records; (3) PSMC to see if Ol Pejeta had a distinct demographic history; (4) ROH analysis to estimate how long ago admixture occurred.</li>
+        <li><strong>Conservation implication:</strong> If it's recent translocation, document it but don't be alarmed. If it's ongoing gene flow via a corridor, protect that corridor immediately — it's doing exactly what corridors should do.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DIVERSITY -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="diversity" class="section">
+<div class="container">
+  <div class="section-label">Module 7</div>
+  <h2>Measuring Genetic Diversity</h2>
+  <p>Hedrick (Chapter 2) frames diversity measurement as the central empirical challenge of population genetics. For conservation, it is existential: a population with no genetic diversity cannot adapt to new diseases, climate shifts, or habitat changes.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/06_diversity_metrics.png" alt="Genetic diversity metrics for Kenyan wildlife species">
+    <div class="figure-caption"><strong>Figure 7.</strong> Four key diversity metrics applied to Kenyan wildlife. Top-left: Expected heterozygosity (H_e) across species — cheetah's extreme depletion reflects a 10,000-year-old bottleneck, while elephants and lions retain healthy diversity. Top-right: ROH distributions showing inbreeding signatures in isolated black rhino populations. Bottom-left: Pairwise Fst matrix revealing lion population differentiation between parks. Bottom-right: N_e trajectory showing how quickly genetic drift becomes dangerous in small populations.</div>
+  </div>
+
+  <div class="card-grid" style="margin-top:1.5rem;">
+    <div class="card">
+      <div class="card-icon green">H</div>
+      <h4>Expected Heterozygosity (H_e)</h4>
+      <p style="font-size:0.88rem;">H_e = 1 − Σpᵢ². The probability that two randomly chosen alleles differ. Ranges 0 (no diversity) to ~0.9 (high diversity). The most widely reported diversity metric.</p>
+      <p style="font-size:0.83rem;color:var(--muted);">Tool: <code>vcftools --het</code></p>
+    </div>
+    <div class="card">
+      <div class="card-icon blue">π</div>
+      <h4>Nucleotide Diversity (π)</h4>
+      <p style="font-size:0.88rem;">Average pairwise nucleotide differences per site. More sensitive to the full frequency spectrum than H_e. Cheetah: 0.00003; humans: 0.001; Drosophila: 0.01.</p>
+      <p style="font-size:0.83rem;color:var(--muted);">Tool: <code>vcftools --site-pi</code></p>
+    </div>
+    <div class="card">
+      <div class="card-icon orange">Ar</div>
+      <h4>Allelic Richness (Ar)</h4>
+      <p style="font-size:0.88rem;">Number of distinct alleles per locus, corrected for sample size (rarefaction). Responds faster to bottlenecks than H_e — rare alleles are lost first.</p>
+      <p style="font-size:0.83rem;color:var(--muted);">Tool: R package <code>hierfstat</code></p>
+    </div>
+    <div class="card">
+      <div class="card-icon red">F</div>
+      <h4>F_ROH — Genomic Inbreeding</h4>
+      <p style="font-size:0.88rem;">Total proportion of the genome in Runs of Homozygosity. The gold standard for measuring realised inbreeding — more accurate than pedigrees for wild animals.</p>
+      <p style="font-size:0.83rem;color:var(--muted);">Tool: <code>plink --homozyg</code></p>
+    </div>
+  </div>
+
+  <div class="case-study" style="margin-top:2rem;">
+    <h4>Black Rhino in Kenya — A Diversity Crisis in Numbers</h4>
+    <p>Kenya holds ~700 black rhinos (<em>Diceros bicornis</em>), split across ~15 sanctuaries. Genomic analysis reveals striking variation: Ol Pejeta rhinos (descended from East African founders) have H_e ≈ 0.38, while some smaller sanctuaries with &lt;20 individuals show H_e ≈ 0.22 — approaching the Florida panther pre-rescue levels that triggered visible inbreeding depression (sperm abnormalities, cardiac defects, immune dysfunction). ROH analysis shows F_ROH up to 0.28 in the most isolated animals — equivalent to a first-cousin mating every generation. KWS's active metapopulation management programme — moving rhinos between sanctuaries to maintain diversity — is directly informed by these genomic analyses.</p>
+  </div>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 6</div>
+    <div class="dq-question">Annual aerial surveys of an Amboseli elephant population show stable numbers (~800 animals) over 30 years. But rangers report lower calf survival in the last decade. You suspect genetic deterioration. Design a genomic study using lcWGS to test whether N_e is declining, inbreeding is increasing, and diversity is being lost. What would a "negative result" (no genetic deterioration detected) mean for management?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>Study design:</strong> Sample 60 elephants across the population (20 calves &lt;5 years, 20 juveniles 5–15 years, 20 adults &gt;15 years). This temporal structure allows you to compare diversity between birth cohorts as a proxy for change over time.</li>
+        <li><strong>Testing N_e decline:</strong> Use GONE on all 60 individuals — it estimates N_e for each of the last 200 generations. A declining N_e trend over the last 20–30 generations (corresponding to ~60–90 years for elephants with 3-year generation time) would confirm genetic deterioration.</li>
+        <li><strong>Testing increasing inbreeding:</strong> Calculate F_ROH for each age class. If calves have higher F_ROH than adults, inbreeding is increasing over time. Long ROH segments (&gt;5 Mb) in calves indicate inbreeding within the last 10 generations.</li>
+        <li><strong>Testing diversity loss:</strong> Calculate H_e and π per age class. Declining values in younger cohorts indicate diversity loss. But note: with only 30 years of data and a 3-year generation time (~10 generations), changes may be subtle — you need high statistical power.</li>
+        <li><strong>Negative result interpretation:</strong> If no genetic deterioration is detected, the lower calf survival likely has environmental or disease causes, not genetic ones. This redirects management attention to: (1) habitat and water availability, (2) disease surveillance, (3) human-wildlife conflict causing stress in nursing mothers. Genomics has ruled out one hypothesis — that itself is valuable.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DEMOGRAPHY -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="demography" class="section">
+<div class="container">
+  <div class="section-label">Module 8</div>
+  <h2>Demographic History</h2>
+  <p>The genome is a time capsule. Patterns of heterozygosity and linkage disequilibrium written into living animals today record the population sizes of their ancestors thousands of years ago.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/08_psmc_demographic.png" alt="PSMC demographic history for cheetah, lion and black rhino">
+    <div class="figure-caption"><strong>Figure 8.</strong> Simulated PSMC demographic histories for three Kenyan species. All show large ancestral N_e followed by contraction — but at different times and magnitudes. Cheetah's catastrophic 10,000-year-old bottleneck (reaching N_e &lt;10,000) explains their extreme low diversity today. Lions declined more recently and less severely. Black rhinos show a more complex multi-phase decline consistent with historical range contraction followed by 20th-century poaching pressure. Key events (Last Glacial Maximum, human expansion) are marked as reference points.</div>
+  </div>
+
+  <table>
+    <tr><th>Tool</th><th>Time Range</th><th>Input</th><th>What It Detects</th></tr>
+    <tr><td><strong>PSMC</strong></td><td>1,000 – 1,000,000+ years</td><td>1 individual, ≥15× coverage</td><td>Ancient bottlenecks, expansions, species divergence</td></tr>
+    <tr><td><strong>GONE</strong></td><td>1 – 200 generations</td><td>Many individuals, SNPs</td><td>Recent management-era N_e decline</td></tr>
+    <tr><td><strong>ROH length</strong></td><td>1 – 500 generations</td><td>Individual WGS</td><td>Timing of inbreeding events</td></tr>
+    <tr><td><strong>LD decay</strong></td><td>10 – 500 generations</td><td>Population SNPs</td><td>Recent bottleneck timing from LD pattern</td></tr>
+  </table>
+
+  <div class="callout info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-content">
+      <p><strong>Converting PSMC time to years:</strong> PSMC estimates time in units of mutations. Converting requires the mutation rate (μ) and generation time (g): <em>Years BP = (coalescence time) × 2 / μ × g</em>. For African mammals: μ ≈ 1.25 × 10⁻⁸ per site per generation. A 2× error in μ doubles all time estimates — always report uncertainty ranges.</p>
+    </div>
+  </div>
+
+  <div class="case-study">
+    <h4>Grevy's Zebra — GONE Reveals a 40-Year N_e Collapse</h4>
+    <p>Grevy's zebra (<em>Equus grevyi</em>) declined from ~15,000 in the 1970s to ~3,000 today — mostly in northern Kenya (Laikipia, Samburu, Isiolo). GONE analysis of 80 Grevy's zebras estimates N_e declining from ~2,500 (50 generations ago, ~150 years) to ~380 (present), with the steepest decline in the last 10–15 generations (~30–45 years). This matches census records. Critically, the genomic analysis identified that some northern and southern sub-populations have diverged enough (Fst = 0.06) to potentially be managed as separate units — with important implications for translocation decisions under the national recovery plan.</p>
+  </div>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 7</div>
+    <div class="dq-question">PSMC analysis of a Tsavo lion shows a population contraction ~50,000 years ago followed by expansion. GONE analysis of 50 Tsavo lions shows N_e declining from ~800 (100 generations ago) to ~120 today. How would you use each result differently in a conservation management plan? Which finding is more actionable this year?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>PSMC result (50,000 years ago):</strong> This is context and narrative, not immediately actionable. It tells us that Tsavo lions experienced a contraction (perhaps during dry savanna expansion during the Last Glacial Maximum), then recovered. This tells managers that the population <em>has</em> the evolutionary resilience to recover — it has done so before. It also means some low diversity is historical, not entirely human-caused.</li>
+        <li><strong>GONE result (N_e = 120 today):</strong> This IS actionable this year. N_e = 120 is dangerously low for a lion population. At this N_e, the rule N_e × s must be &gt;1 for selection to work means alleles with s &lt; 0.008 (0.8% fitness disadvantage) are effectively neutral to selection. Slightly deleterious alleles will accumulate. If this trend continues, N_e will fall below the "50/500 rule" threshold (N_e = 50 = immediate extinction risk; N_e = 500 = long-term viability).</li>
+        <li><strong>Immediate management actions from GONE:</strong> (1) Is there a physical barrier reducing gene flow from other Tsavo/Mara lions? GPS collar data combined with Fst can identify corridors to restore. (2) Is the sex ratio skewed (trophy hunting of males)? N_e formula: 4NfNm/(Nf+Nm). Removing males disproportionately reduces N_e. (3) Consider introducing 2–3 unrelated males from Maasai Mara as genetic rescue.</li>
+        <li><strong>Bottom line:</strong> PSMC is your 50,000-year story; GONE is your urgent 5-year warning. Both matter, but GONE guides your management calendar.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SELECTION -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="selection" class="section">
+<div class="container">
+  <div class="section-label">Module 9</div>
+  <h2>Selection &amp; Genetic Load</h2>
+  <p>Selection is the engine of adaptation — and in small populations, an engine that stalls. Hedrick's Chapter 3 establishes the mathematical foundation; conservation genomics shows its life-and-death consequences.</p>
+
+  <div class="figure-block">
+    <img src="assets/images/07_selection_types.png" alt="Three types of natural selection: positive, purifying and balancing">
+    <div class="figure-caption"><strong>Figure 9.</strong> Three types of natural selection. Left: Positive selection drives a beneficial allele from 1% to near-fixation (modelled after industrial melanism in <em>Biston betularia</em>, s=0.15). Centre: Purifying selection removes a deleterious allele — slowly at low frequency because recessives hide in heterozygotes. Right: Balancing selection (heterozygote advantage) maintains the sickle cell allele (HbS) at a stable equilibrium in East Africa, with both starting frequencies (q=0.05 and q=0.30) converging to q_e=0.167.</div>
+  </div>
+
+  <h3>The Critical Equation: N_e × s</h3>
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin:1.5rem 0;">
+    <table style="margin:0;">
+      <tr><th>Condition</th><th>Outcome</th><th>Example (s=0.01)</th></tr>
+      <tr><td>N_e × s &gg; 1</td><td style="color:var(--green);">Selection wins — deleterious alleles purged</td><td>Need N_e &gt; 100</td></tr>
+      <tr><td>N_e × s ≈ 1</td><td style="color:var(--orange);">Stochastic — allele fate unpredictable</td><td>N_e ≈ 100</td></tr>
+      <tr><td>N_e × s &ll; 1</td><td style="color:var(--red);">Drift wins — slightly deleterious alleles fix</td><td>N_e &lt; 100</td></tr>
+    </table>
+    <p style="margin-top:1rem;font-size:0.88rem;color:var(--muted);">The most important single insight from Hedrick Chapter 4 for conservation managers: <strong>small populations lose the ability to purge harmful mutations.</strong> As N_e falls, slightly deleterious variants accumulate freely — a process called mutational meltdown.</p>
+  </div>
+
+  <div class="figure-block">
+    <img src="assets/images/10_tajimas_d.png" alt="Tajima's D allele frequency spectrum and genome-wide scan">
+    <div class="figure-caption"><strong>Figure 10.</strong> Tajima's D — detecting selection from allele frequencies. Left: The allele frequency spectrum under three scenarios. A selective sweep (blue) produces many rare variants (excess of low-frequency SNPs) around the swept locus, giving D &lt; 0. Balancing selection (orange) produces excess intermediate-frequency variants, giving D &gt; 0. Right: Genome-wide Tajima's D scan showing a putative selective sweep region (around position 40 Mb) and a putative balancing selection region (around position 70 Mb) in a simulated Maasai Mara lion dataset.</div>
+  </div>
+
+  <h3>Detection Methods Compared</h3>
+  <table>
+    <tr><th>Method</th><th>What it detects</th><th>Test statistic</th><th>Caveat</th></tr>
+    <tr><td>Tajima's D</td><td>Deviation in allele frequency spectrum from neutrality</td><td>D = (θ_π − θ_W) / SE</td><td>Demographic history (bottleneck, expansion) confounds interpretation</td></tr>
+    <tr><td>dN/dS (Ka/Ks)</td><td>Excess non-synonymous change in a gene</td><td>ω = dN/dS; &gt;1 = positive selection</td><td>Requires coding sequence + outgroup species; not single-population</td></tr>
+    <tr><td>ROH &amp; F_ROH</td><td>Inbreeding, homozygosity of deleterious recessives</td><td>F_ROH = ΣROH_length / genome_size</td><td>Needs ≥8× WGS; long ROH only with dense SNP data</td></tr>
+    <tr><td>McDonald-Kreitman</td><td>Proportion of divergence driven by positive selection (α)</td><td>α = 1 − (Ds×Pn)/(Dn×Ps)</td><td>Requires two species; sensitive to demographic assumptions</td></tr>
+    <tr><td>Fst outlier</td><td>Genomic regions with unusually high differentiation between populations</td><td>Windowed Fst vs. genome-wide distribution</td><td>Demography can inflate Fst genome-wide; use outlier approach</td></tr>
+  </table>
+
+  <div class="case-study">
+    <h4>Sickle Cell Anemia in East Africa — The Textbook Case</h4>
+    <p>The HbS allele causes severe anaemia when homozygous (HbS/HbS — fitness severely reduced, s₂≈0.75), but heterozygotes (HbA/HbS) are protected from <em>Plasmodium falciparum</em> malaria (higher fitness than normal homozygotes HbA/HbA in malaria-endemic regions, s₁≈0.15). Hedrick's formula predicts the stable equilibrium: q_e = s₁/(s₁+s₂) = 0.15/0.90 ≈ 0.167. Observed HbS frequency in West Africa: ~0.10–0.15 — almost exactly the theoretical prediction. In East Africa, where malaria transmission varies with altitude (lower in highland Kenya), HbS frequencies are lower — exactly as the model predicts, because s₁ (malaria selection advantage) is reduced at altitude. This is one of the most precisely confirmed cases of natural selection in humans, and it is happening in Kenya right now.</p>
+  </div>
+
+  <div class="case-study">
+    <h4>Isle Royale Wolves — Mutational Meltdown in Action</h4>
+    <p>Grey wolves (<em>Canis lupus</em>) colonised Isle Royale (a Lake Superior island, USA) via an ice bridge ~100 years ago. By 2016, only two individuals remained. Genomic analysis revealed F_ROH = 0.28 (first-cousin-equivalent inbreeding every generation), a severe spinal malformation (lumbosacral transitional vertebrae) affecting 57% of skeletons — far above any mainland population — and an accumulation of deleterious homozygous variants across the genome. This is textbook mutational meltdown: N_e too small for purifying selection, harmful alleles fixing by drift. The response: in 2018–2019, 19 wolves from mainland Minnesota and Ontario were introduced — genetic rescue implemented with genomics guiding donor selection.</p>
+  </div>
+
+  <div class="dq-box">
+    <div class="dq-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Discussion Question 8</div>
+    <div class="dq-question">A Hirola population (<em>Beatragus hunteri</em>) in northern Kenya has census size N=500 but descends from ~40 founders from a captive breeding programme 20 years ago (roughly 5 hirola generations). You estimate N_e = 35. Which deleterious alleles (specify by their selection coefficient s) are effectively invisible to purifying selection? What management intervention would you recommend, and what genomic data would you collect first to guide it?</div>
+    <span class="dq-toggle"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8.747 4.86L13.543 10.342C14.109 10.987 13.649 12 12.79 12H3.198a1 1 0 0 1-.753-1.659l4.796-5.48a1 1 0 0 1 1.506 0z"/></svg> Show brainstorm / key ideas</span>
+    <div class="dq-answer">
+      <ul>
+        <li><strong>Which alleles are invisible to selection:</strong> An allele is effectively neutral when N_e × s &lt; 1, i.e., s &lt; 1/N_e = 1/35 ≈ 0.029. So any allele with a selection disadvantage below ~3% is effectively neutral in this population. This includes a very large fraction of all deleterious mutations (most have s = 0.001–0.01). Only alleles with s &gt; 0.03 (major effect mutations) are being efficiently removed.</li>
+        <li><strong>Five-generation accumulation:</strong> In only 5 generations, slightly deleterious alleles (s = 0.01) have drifted substantially. With N_e = 35, the rate of heterozygosity loss per generation is 1/(2×35) = 1.4% per generation. After 5 generations: H_remaining = (1 − 0.014)⁵ × H₀ ≈ 0.93 H₀. Only a 7% reduction so far — but compounding with mutation accumulation, the trajectory is concerning.</li>
+        <li><strong>Recommended intervention:</strong> Genetic rescue — introduce 3–5 unrelated hirola from the Tsavo reintroduction site or, if available, from the last known wild population near Garissa. Even a single unrelated individual can dramatically increase N_e in the next generation. Calculate: introducing 5 unrelated founders into a population of 35 gives N_e = 4×35×5/(35+5) = 17.5 — this is wrong because founders are few; the correct calculation gives N_e approximately doubling, which doubles the effectiveness of purifying selection.</li>
+        <li><strong>Genomic data to collect first:</strong> (1) lcWGS at 2× for all accessible animals (estimate: 100 animals × $150 = $15,000). This gives F_ROH, Fst between any remaining wild populations, and kinship for breeding management. (2) dN/dS and Tajima's D to quantify the current deleterious burden. (3) If budget allows, one high-coverage (20×) individual for PSMC to understand pre-captive demographic history.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- GLOSSARY -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="glossary" class="section">
+<div class="container">
+  <div class="section-label">Reference</div>
+  <h2>Glossary of Key Terms</h2>
+  <p>Definitions in the context of conservation genomics and wildlife management.</p>
+  <div class="glossary-grid">
+    <div class="glossary-item"><div class="glossary-term">Allele frequency spectrum (AFS)</div><div class="glossary-def">The distribution of allele frequencies across all SNPs. Its shape reveals population history and selection. A skew toward rare variants suggests positive selection or population expansion (Tajima's D &lt; 0).</div></div>
+    <div class="glossary-item"><div class="glossary-term">Ascertainment bias</div><div class="glossary-def">Bias introduced when molecular markers are not a random sample of the genome. A major limitation of RAD-Seq and pre-designed SNP arrays — can inflate or deflate diversity and divergence estimates.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Coalescence</div><div class="glossary-def">The point in the past where two gene copies shared a common ancestor. More recent coalescence = smaller ancestral N_e. PSMC uses genome-wide coalescence patterns to reconstruct N_e through time.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Effective population size (N_e)</div><div class="glossary-def">The size of an idealised population experiencing the same rate of genetic drift as the observed population. N_e is almost always much smaller than census size due to unequal sex ratios, variance in offspring number, and fluctuating population sizes.</div></div>
+    <div class="glossary-item"><div class="glossary-term">F_ROH</div><div class="glossary-def">Inbreeding coefficient estimated from Runs of Homozygosity. F_ROH = total ROH length / autosome length. Currently the most accurate measure of realised inbreeding for wild animals without pedigrees.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Fst</div><div class="glossary-def">A measure of genetic differentiation between populations. Fst = (H_T − H_S)/H_T. Values: &lt;0.05 little differentiation; 0.05–0.15 moderate; &gt;0.25 high (consider as separate management units).</div></div>
+    <div class="glossary-item"><div class="glossary-term">Genetic drift</div><div class="glossary-def">Random changes in allele frequency due to finite population size. Strongest in small populations. The main enemy of conservation genomics — in populations with N_e &lt; 100, drift overwhelms even moderate selection.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Genetic load</div><div class="glossary-def">The reduction in mean population fitness below its theoretical maximum, caused by deleterious alleles. In small populations, load accumulates through drift (mutational meltdown). Measured as lethal equivalents per haploid genome (B = 1–10 in most mammals).</div></div>
+    <div class="glossary-item"><div class="glossary-term">Genotype likelihood</div><div class="glossary-def">A probability distribution over the three possible genotypes (AA, AT, TT) at a given position for a given individual, based on observed reads. Used in ANGSD instead of hard genotype calls — essential for low-coverage WGS (&lt;5×).</div></div>
+    <div class="glossary-item"><div class="glossary-term">Hardy-Weinberg equilibrium (HWE)</div><div class="glossary-def">Expected genotype frequencies (p², 2pq, q²) in a large, randomly mating population with no selection, mutation, migration or drift. Deviations signal inbreeding, subdivision (Wahlund effect), or genotyping error.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Linkage disequilibrium (LD)</div><div class="glossary-def">Non-random association between alleles at different loci. Nearby loci are in high LD (alleles travel together). LD decays with distance via recombination. Strong long-range LD = recent bottleneck or recent selection. Used by GONE to estimate recent N_e.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Mutational meltdown</div><div class="glossary-def">A positive feedback loop: reduced N_e allows deleterious mutations to accumulate by drift → fitness declines → population shrinks → N_e further reduced → more mutations accumulate. Documented in Isle Royale wolves and theorised for many critically endangered species.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Nucleotide diversity (π)</div><div class="glossary-def">Average pairwise nucleotide differences between individuals per site. π = (1/L) Σ 2pᵢ(1−pᵢ). Cheetah: ~0.00003; humans: ~0.001; Drosophila: ~0.01. A key indicator of population evolutionary history.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Phred quality score (Q)</div><div class="glossary-def">Q = −10 × log₁₀(P_error). Q20 = 1% error; Q30 = 0.1% error; Q40 = 0.01% error. Standard bioinformatics threshold: discard bases below Q20. FastQC visualises this across all reads in your dataset.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Selective sweep</div><div class="glossary-def">Rapid fixation of a beneficial allele, carrying nearby neutral variants along (genetic hitchhiking). Reduces local diversity around the selected locus. Detected by Tajima's D &lt; 0 and extended haplotype homozygosity (EHH) tests.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Wahlund effect</div><div class="glossary-def">Apparent excess of homozygotes when samples from genetically distinct subpopulations are pooled and analysed as one. Mimics inbreeding in HWE tests. Common when sampling from structurally complex populations — always test for structure before interpreting HWE.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <p style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;">Population Genetics for Conservation</p>
+    <p>Wildlife Genomics 3 Workshop · Pwani University &amp; IISc · Kilifi, Kenya · July–August 2025</p>
+    <p style="margin-top:1rem;">Core textbook: Philip W. Hedrick, <em>Genetics of Populations</em>, 4th ed., Jones and Bartlett (2010)<br>
+    Additional: Allendorf et al. (2022); Frankham et al. (2010); Nielsen &amp; Slatkin (2013)</p>
+    <p style="margin-top:1rem;">
+      <a href="https://github.com/Rodneyomukuti/population_genetics" target="_blank">GitHub Repository</a> ·
+      <a href="https://poodl-ces.github.io/Wildlife_Genomics_3.io/" target="_blank">Workshop Website</a> ·
+      Contact: <a href="mailto:s.wambua@pu.ac.ke">s.wambua@pu.ac.ke</a>
+    </p>
+    <p style="margin-top:1.5rem;font-size:0.78rem;color:#444d56;">All case studies use publicly available research data. Genomic values are illustrative based on published literature for each species.</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
