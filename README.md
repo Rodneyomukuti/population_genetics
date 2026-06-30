@@ -1,122 +1,85 @@
-# Population Genetics for Conservation 🧬
+# Population Genetics for Conservation
 
-**An interactive tutorial on conservation genomics — grounded in Kenyan wildlife**
+A general-purpose, interactive training resource on conservation genomics.
 
-> *"Nothing in evolution makes sense except in light of population genetics."* — Michael Lynch (2007)
+"Nothing in evolution makes sense except in light of population genetics." -- Michael Lynch (2007)
 
-This repository hosts a complete, interactive teaching resource for the **Wildlife Genomics 3 Workshop** (Pwani University × IISc, Kilifi, Kenya). It covers everything from Linux basics and FASTQ files to selection scans and genetic load — using lions, elephants, rhinos, and wild dogs from Kenya's national parks as case studies.
+This repository hosts an interactive tutorial covering the full conservation genomics workflow, from choosing a sequencing strategy through to selection scans, grounded in the theory of Hedrick's *Genetics of Populations* and illustrated with example case studies.
 
-## 🌍 Live Site
-**[View the tutorial →](https://Rodneyomukuti.github.io/population_genetics)**
+## Live Site
 
----
+[View the tutorial](https://Rodneyomukuti.github.io/population_genetics)
 
-## 📚 Modules
+## Modules
 
 | # | Module | Topics |
 |---|--------|--------|
-| 0 | **Why Genomics?** | The conservation case; invisible threats |
-| 1 | **Sequencing Strategies** | WGS, lcWGS, RAD-Seq, Amplicon-Seq; Illumina vs ONT |
-| 2 | **Linux Basics** | Essential commands; FASTQ anatomy; Q scores |
-| 3 | **Quality Control** | FastQC; Trim Galore; what bad data looks like |
-| 4 | **Read Mapping** | BWA-MEM; SAM/BAM format; IGV visualisation |
-| 5 | **Variant Calling & Filtering** | bcftools; VCF format; 6 critical filters explained |
-| 6 | **Population Structure** | HWE; PCA; Admixture; Wahlund effect |
-| 7 | **Genetic Diversity** | H_e, π, allelic richness, F_ROH, Fst |
-| 8 | **Demographic History** | PSMC; GONE; ROH length distribution |
-| 9 | **Selection & Genetic Load** | Purifying/positive/balancing selection; Tajima's D; dN/dS; mutational meltdown |
+| 0 | Why Genomics | The conservation case for genomic data |
+| 1 | Sequencing Strategies | Depth and coverage; WGS, lcWGS, RAD-Seq, amplicon sequencing; Illumina vs Oxford Nanopore |
+| 2 | The Shell and FASTQ Files | Directory structures, the command line, FASTQ anatomy, quality scores |
+| 3 | Quality Control | FastQC, Trim Galore |
+| 4 | Read Mapping | BWA-MEM, SAM/BAM format |
+| 5 | Variant Calling and Filtering | bcftools, VCF format, filtering criteria |
+| 6 | Population Structure | Hardy-Weinberg equilibrium, PCA, ADMIXTURE, Fst, translocation interpretation |
+| 7 | Genetic Diversity | Ho, He, pi -- what each measures and when each is preferred |
+| 8 | Demographic History | PSMC, GONE |
+| 9 | Selection and Genetic Load | Purifying, positive, and balancing selection; Tajima's D; mutational load |
 
----
+A dedicated Bibliography section follows the Glossary, listing full citation details for every documented case study referenced in the modules above.
 
-## 🧠 Interactive Features
+## Interactive Features
 
-- **12 Discussion Questions** — each with a clickable "Show brainstorm" revealing key ideas and model answers
-- **Kenya Case Studies** — Maasai Mara lions, Amboseli elephants, Laikipia black rhino, Grevy's zebra, African wild dogs, and more
-- **10 Original Figures** — generated from scientific principles, not stock images
-- **Code Blocks** — syntax-highlighted bash commands for every pipeline step
+- 12 discussion questions, each with a clickable "Show brainstorm" panel revealing key ideas
+- Documented case studies clearly labelled and cited; illustrative scenarios explicitly marked as hypothetical
+- 11 original figures generated from underlying scientific models, including a real Kenya boundary map for geographic orientation
+- Conservation application notes in every module connecting theory to management decisions
 
----
+## A Note on Citations
 
-## 🗂️ Repository Structure
+Case studies in this guide are labelled either "Documented case study" (citing real, identifiable published research) or "Hypothetical Example" (an illustrative scenario constructed to demonstrate a principle, not based on a specific dataset). Readers should independently verify all citations, including DOIs, before relying on them, since this guide was prepared without live web access for citation verification at the time of writing.
+
+## Repository Structure
 
 ```
 population_genetics/
-├── index.html              # Main tutorial site (GitHub Pages)
-├── README.md               # This file
+├── index.html
+├── README.md
 ├── assets/
-│   ├── css/
-│   │   └── style.css       # Dark-theme stylesheet
-│   ├── js/
-│   │   └── main.js         # Interactive features (tabs, Q&A toggles)
-│   └── images/             # Generated scientific figures
-│       ├── 01_marker_evolution.png
+│   ├── css/style.css
+│   ├── js/main.js
+│   └── images/
+│       ├── 01_depth_coverage.png
 │       ├── 02_kenya_parks_map.png
-│       ├── 03_fastq_explainer.png
-│       ├── 04_hardy_weinberg.png
-│       ├── 05_population_structure.png
-│       ├── 06_diversity_metrics.png
-│       ├── 07_selection_types.png
-│       ├── 08_psmc_demographic.png
-│       ├── 09_pipeline_workflow.png
-│       └── 10_tajimas_d.png
-└── modules/                # (Future: individual module markdown files)
+│       ├── 03_shell_directory.png
+│       ├── 04_fastq_explainer.png
+│       ├── 05_hardy_weinberg.png
+│       ├── 06_population_structure.png
+│       ├── 07_diversity_ho_he_pi.png
+│       ├── 08_fst_structure.png
+│       ├── 09_selection_types.png
+│       ├── 10_pipeline_workflow.png
+│       └── 11_tajimas_d.png
 ```
 
----
-
-## 🚀 Quick Setup (5 minutes)
+## Setup
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/Rodneyomukuti/population_genetics.git
 cd population_genetics
-
-# 2. The site runs as static HTML — no build step needed
-# Open index.html in any browser to view locally
-
-# 3. To host on GitHub Pages:
-# Settings → Pages → Source: "Deploy from branch" → Branch: main → / (root)
 ```
 
----
+The site is static HTML with no build step. Open index.html directly in a browser to preview locally.
 
-## 📖 Core Reference
+To host on GitHub Pages: Settings -> Pages -> Source: Deploy from branch -> Branch: main -> / (root).
 
-**Hedrick, P.W. (2010).** *Genetics of Populations*, 4th edition. Jones and Bartlett Publishers.
+## Core Reference
 
-Additional references:
-- Allendorf, F.W. et al. (2022). *Conservation and the Genomics of Populations*, 3rd ed.
-- Frankham, R. et al. (2010). *Introduction to Conservation Genetics*, 2nd ed.
-- Nielsen, R. & Slatkin, M. (2013). *An Introduction to Population Genetics*.
+Hedrick, P.W. (2010). *Genetics of Populations*, 4th edition. Jones and Bartlett Publishers.
 
----
+## Contact
 
-## 🔬 Kenya Case Studies Used
+omukutirodney@gmail.com
 
-| Species | Location | Genomic Question |
-|---------|----------|-----------------|
-| African lion (*Panthera leo*) | Maasai Mara, Amboseli, Tsavo, Samburu | Population structure, Fst between parks |
-| African elephant (*Loxodonta africana*) | Amboseli | HWE testing, diversity monitoring |
-| Black rhinoceros (*Diceros bicornis*) | Ol Pejeta, Laikipia, Tsavo | Inbreeding (ROH), metapopulation management |
-| Grevy's zebra (*Equus grevyi*) | Lewa, Samburu | N_e decline (GONE), conservation units |
-| African wild dog (*Lycaon pictus*) | Samburu | lcWGS population structure, corridor detection |
-| Rothschild giraffe (*G. c. rothschildi*) | Laikipia, Nakuru, Ol Pejeta | Admixture, translocation decisions |
-| Hirola (*Beatragus hunteri*) | Northern Kenya | Founder effect, mutational meltdown risk |
-| Cheetah (*Acinonyx jubatus*) | Pan-African | PSMC demographic history, extreme low diversity |
+## Licence
 
----
-
-## 🎓 Workshop Information
-
-- **Dates:** July 22 – August 4, 2025
-- **Location:** Pwani University, Kilifi, Kenya
-- **Organized by:** Pwani University & Indian Institute of Science (IISc)
-- **Contact:** [s.wambua@pu.ac.ke](mailto:s.wambua@pu.ac.ke) | [anubhabkhan@gmail.com](mailto:anubhabkhan@gmail.com)
-- **Workshop site:** [poodl-ces.github.io/Wildlife_Genomics_3.io](https://poodl-ces.github.io/Wildlife_Genomics_3.io/)
-
----
-
-## 📄 Licence
-
-Educational content released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Code under MIT. Please cite appropriately when reusing.
-
+Educational content released under CC BY 4.0. Code under MIT.
